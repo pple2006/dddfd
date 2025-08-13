@@ -1,1 +1,27 @@
+@echo off
+title Get HWID
+color 0A
 
+:: Clear screen
+cls
+
+echo Retrieving your HWID...
+:: Get HWID using WMIC
+for /f "skip=1 tokens=*" %%a in ('wmic csproduct get uuid') do (
+    set "hwid=%%a"
+    goto :showhwid
+)
+
+:showhwid
+:: Trim spaces
+set hwid=%hwid: =%
+echo.
+echo Your HWID is: %hwid%
+echo.
+
+:: Copy to clipboard
+echo %hwid% | clip
+echo HWID copied to clipboard!
+
+pause
+exit
